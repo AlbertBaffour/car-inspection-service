@@ -22,8 +22,12 @@ public class InspectionController {
     @PostConstruct
     public void fillDB(){
         if(inspectionRepository.count()==0){
-            inspectionRepository.save(new Inspection("1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28),1));
-            inspectionRepository.save(new Inspection("1Vcj543","Banden versleten",false, LocalDate.of(2021,9,30),2));
+           Inspection i1 = new Inspection("1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28));
+           i1.setInspectionNumber(1);
+            inspectionRepository.save(i1);
+            Inspection i2 = new Inspection("1Vcj543","Banden versleten",false, LocalDate.of(2021,9,30));
+            i2.setInspectionNumber(2);
+            inspectionRepository.save(i2);
         }
 
         System.out.println("Inspections test: " + inspectionRepository.findAll().size());
@@ -47,6 +51,8 @@ public class InspectionController {
     }
     @PostMapping("/inspections")
     public Inspection addInspection(@RequestBody Inspection inspection){
+        Integer inspection_number= inspectionRepository.findAll().size()+1;
+        inspection.setInspectionNumber(inspection_number);
         inspectionRepository.save(inspection);
         return inspection;
     }

@@ -18,12 +18,11 @@ public class Inspection {
     public Inspection() {
     }
 
-    public Inspection(String licensePlate, String comment, Boolean passed, LocalDate inspectionDate, Integer inspectionNumber) {
+    public Inspection(String licensePlate, String comment, Boolean passed, LocalDate inspectionDate) {
          setLicensePlate(licensePlate);
          setComment(comment);
          setPassed(passed);
          setInspectionDate(inspectionDate);
-         setInspectionNumber(inspectionNumber);
     }
 
     public String getId() {
