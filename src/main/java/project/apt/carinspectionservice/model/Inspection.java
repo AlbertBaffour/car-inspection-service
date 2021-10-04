@@ -4,12 +4,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 @Document(collection = "inspections")
 public class Inspection {
     @Id
     private String id;
+    private Integer inspectionNumber;
     private String licensePlate;
     private String comment;
     private Boolean passed;
@@ -18,11 +18,12 @@ public class Inspection {
     public Inspection() {
     }
 
-    public Inspection(String licensePlate, String comment, Boolean passed, LocalDate inspectionDate) {
+    public Inspection(String licensePlate, String comment, Boolean passed, LocalDate inspectionDate, Integer inspectionNumber) {
          setLicensePlate(licensePlate);
          setComment(comment);
          setPassed(passed);
          setInspectionDate(inspectionDate);
+         setInspectionNumber(inspectionNumber);
     }
 
     public String getId() {
@@ -63,5 +64,13 @@ public class Inspection {
 
     public void setInspectionDate(LocalDate inspectionDate) {
         this.inspectionDate = inspectionDate;
+    }
+
+    public Integer getInspectionNumber() {
+        return inspectionNumber;
+    }
+
+    public void setInspectionNumber(Integer inspectionNumber) {
+        this.inspectionNumber = inspectionNumber;
     }
 }
