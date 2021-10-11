@@ -19,11 +19,10 @@ public class InspectionController {
     @PostConstruct
     public void fillDB(){
         if(inspectionRepository.count()==0){
-           Inspection i1 = new Inspection("1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28));
-           i1.setInspectionNumber(1);
+           Inspection i1 = new Inspection(1L,"1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28));
+
             inspectionRepository.save(i1);
-            Inspection i2 = new Inspection("1VCJ543","Banden versleten",false, LocalDate.of(2021,9,30));
-            i2.setInspectionNumber(2);
+            Inspection i2 = new Inspection(2L,"1VCJ543","Banden versleten",false, LocalDate.of(2021,9,30));
             inspectionRepository.save(i2);
         }
 
@@ -46,10 +45,12 @@ public class InspectionController {
     public Inspection findInspectionByLicensePlateAndInspectionDateAndPassed(@PathVariable String licensePlate,@PathVariable LocalDate inspectionDate,@PathVariable Boolean passed){
         return inspectionRepository.findInspectionByLicensePlateAndInspectionDateAndPassed(licensePlate,inspectionDate, passed);
     }
+    @GetMapping("/inspections/inspection_number/{inspectionNumber}")
+    public Inspection findInspectionByInspectionNumber(@PathVariable Long inspectionNumber){
+        return inspectionRepository.findInspectionByInspectionNumber(inspectionNumber);
+    }
     @PostMapping("/inspections")
     public Inspection addInspection(@RequestBody Inspection inspection){
-        Integer inspection_number= inspectionRepository.findAll().size()+1;
-        inspection.setInspectionNumber(inspection_number);
         inspectionRepository.save(inspection);
         return inspection;
     }
@@ -63,7 +64,7 @@ public class InspectionController {
         return retrievedInspection;
     }
     @DeleteMapping("/inspection/inspection_number/{inspectionNumber}")
-    public ResponseEntity deleteInspection(@PathVariable Integer inspectionNumber){
+    public ResponseEntity deleteInspection(@PathVariable Long inspectionNumber){
         Inspection inspection = inspectionRepository.findInspectionByInspectionNumber(inspectionNumber);
         if(inspection!=null){
             inspectionRepository.delete(inspection);

@@ -17,7 +17,7 @@ class CarInspectionServiceApplicationTests {
 
     @Test
     void getInspectionInfo_happy(){
-        final Inspection inspection= new Inspection("1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28));
+        final Inspection inspection= new Inspection(1L,"1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28));
         assertThat(inspection).isNotNull();
         assertThat(inspection.getComment()).isEqualTo("Geen opmerking");
         assertThat(inspection.getPassed()).isEqualTo(true);
@@ -26,11 +26,11 @@ class CarInspectionServiceApplicationTests {
     @Test
     void getSet_happy(){
         final Inspection inspection= new Inspection();
-        inspection.setInspectionNumber(3);
+        inspection.setInspectionNumber(3L);
         inspection.setComment("Alles in orde");
         inspection.setPassed(true);
         assertThat(inspection).isNotNull();
-        assertThat(inspection.getInspectionNumber()).isEqualTo(3);
+        assertThat(inspection.getInspectionNumber()).isEqualTo(3L);
         assertThat(inspection.getComment()).isEqualTo("Alles in orde");
         assertThat(inspection.getPassed()).isEqualTo(true);
     }

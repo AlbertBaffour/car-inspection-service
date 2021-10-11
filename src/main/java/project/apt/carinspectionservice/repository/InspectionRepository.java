@@ -12,6 +12,6 @@ public interface InspectionRepository extends MongoRepository<Inspection, String
     List<Inspection> findInspectionsByLicensePlate(String licensePlate);
     List<Inspection> findInspectionByLicensePlateAndInspectionDate(String licensePlate, LocalDate inspectionDate);
     Inspection findInspectionByLicensePlateAndInspectionDateAndPassed(String licensePlate, LocalDate inspectionDate,Boolean passed);
-    Inspection findInspectionByInspectionNumber(Integer inspectionNumber);
+    Inspection findInspectionByInspectionNumber(Long inspectionNumber);
 
 }
