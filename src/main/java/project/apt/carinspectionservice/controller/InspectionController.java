@@ -1,12 +1,14 @@
 package project.apt.carinspectionservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.apt.carinspectionservice.model.Inspection;
 import project.apt.carinspectionservice.repository.InspectionRepository;
 
 import javax.annotation.PostConstruct;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,10 +21,10 @@ public class InspectionController {
     @PostConstruct
     public void fillDB(){
         if(inspectionRepository.count()==0){
-           Inspection i1 = new Inspection(1L,"1VQW871","Geen opmerking",true, LocalDate.of(2021,9,28));
+           Inspection i1 = new Inspection(1L,"1VQW871","Geen opmerking",true, LocalDate.now());
 
             inspectionRepository.save(i1);
-            Inspection i2 = new Inspection(2L,"1VCJ543","Banden versleten",false, LocalDate.of(2021,9,30));
+            Inspection i2 = new Inspection(2L,"1VCJ543","Banden versleten",false, LocalDate.now());
             inspectionRepository.save(i2);
         }
 
@@ -38,12 +40,8 @@ public class InspectionController {
         return inspectionRepository.findInspectionsByLicensePlate(licensePlate);
     }
     @GetMapping("/inspections/license_plate/{licensePlate}/inspection_date/{inspectionDate}")
-    public List<Inspection> findInspectionByLicensePlateAndInspectionDate(@PathVariable String licensePlate,@PathVariable LocalDate inspectionDate){
+    public List<Inspection> findInspectionByLicensePlateAndInspectionDate(@PathVariable String licensePlate,@PathVariable  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inspectionDate){
         return inspectionRepository.findInspectionByLicensePlateAndInspectionDate(licensePlate,inspectionDate);
-    }
-    @GetMapping("/inspections/license_plate/{licensePlate}/inspection_date/{inspectionDate}/passed/{passed}")
-    public Inspection findInspectionByLicensePlateAndInspectionDateAndPassed(@PathVariable String licensePlate,@PathVariable LocalDate inspectionDate,@PathVariable Boolean passed){
-        return inspectionRepository.findInspectionByLicensePlateAndInspectionDateAndPassed(licensePlate,inspectionDate, passed);
     }
     @GetMapping("/inspections/inspection_number/{inspectionNumber}")
     public Inspection findInspectionByInspectionNumber(@PathVariable Long inspectionNumber){
