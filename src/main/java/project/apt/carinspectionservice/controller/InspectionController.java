@@ -1,10 +1,12 @@
 package project.apt.carinspectionservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.apt.carinspectionservice.model.Inspection;
+import project.apt.carinspectionservice.model.InspectionDTO;
 import project.apt.carinspectionservice.repository.InspectionRepository;
 
 import javax.annotation.PostConstruct;
@@ -28,8 +30,7 @@ public class InspectionController {
             inspectionRepository.save(i2);
         }
 
-        System.out.println("Inspections test: " + inspectionRepository.findAll().size());
-    }
+     }
 
     @GetMapping("/inspections")
     public List<Inspection> findAll(){
@@ -48,12 +49,19 @@ public class InspectionController {
         return inspectionRepository.findInspectionByInspectionNumber(inspectionNumber);
     }
     @PostMapping("/inspections")
-    public Inspection addInspection(@RequestBody Inspection inspection){
-        inspectionRepository.save(inspection);
-        return inspection;
+    public Inspection addInspection(@RequestBody InspectionDTO inspection){
+        Inspection persistentInspection = new Inspection();
+        persistentInspection.setId(inspection.getId());
+        persistentInspection.setInspectionNumber(inspection.getInspectionNumber());
+        persistentInspection.setLicensePlate(inspection.getLicensePlate());
+        persistentInspection.setComment(inspection.getComment());
+        persistentInspection.setPassed(inspection.getPassed());
+        persistentInspection.setInspectionDate(inspection.getInspectionDate());
+        inspectionRepository.save(persistentInspection);
+        return persistentInspection;
     }
     @PutMapping("/inspections")
-    public Inspection updateInspection(@RequestBody Inspection updatedInspection){
+    public Inspection updateInspection(@RequestBody InspectionDTO updatedInspection){
         Inspection retrievedInspection = inspectionRepository.findInspectionByInspectionNumber(updatedInspection.getInspectionNumber());
         retrievedInspection.setComment(updatedInspection.getComment());
         retrievedInspection.setPassed(updatedInspection.getPassed());
