@@ -14,7 +14,6 @@ import project.apt.carinspectionservice.model.Inspection;
 import project.apt.carinspectionservice.repository.InspectionRepository;
 
 import java.time.LocalDate;
-import java.util.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -23,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class InspectionControllerIntegrationTests {
+ class InspectionControllerIntegrationTests {
 
 
     @Autowired
@@ -38,7 +37,7 @@ public class InspectionControllerIntegrationTests {
     private Inspection inspection4= new Inspection(4L,"1ABC871","Geen opmerking",true, LocalDate.now());
 
     @BeforeEach
-    public void beforeAllTests() {
+     void beforeAllTests() {
         inspectionRepository.deleteAll();
         inspectionRepository.save(inspection1);
         inspectionRepository.save(inspection2);
@@ -46,19 +45,19 @@ public class InspectionControllerIntegrationTests {
         inspectionRepository.save(inspection4);
     }
     @AfterEach
-    public void afterAllTests() {
+     void afterAllTests() {
         //Watch out with deleteAll() methods when you have other data in the test database!
         inspectionRepository.deleteAll();
     }
 
-    public ObjectMapper defaultMapper() {
+     ObjectMapper defaultMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
     private ObjectMapper mapper =defaultMapper();
     @Test
-    public void givenInspection_whenGetInspections_thenReturnJsonInspections() throws Exception {
+     void givenInspection_whenGetInspections_thenReturnJsonInspections() throws Exception {
 
         mockMvc.perform(get("/inspections"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -72,7 +71,7 @@ public class InspectionControllerIntegrationTests {
                 .andExpect(jsonPath("$[1].passed",is(true)));
     }
     @Test
-    public void givenInspection_whenGetInspectionByInspectionNr_thenReturnJsonInspection() throws Exception {
+     void givenInspection_whenGetInspectionByInspectionNr_thenReturnJsonInspection() throws Exception {
 
         mockMvc.perform(get("/inspections/inspection_number/{inspectionNumber}",2L))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -83,7 +82,7 @@ public class InspectionControllerIntegrationTests {
     }
 
     @Test
-    public void givenInpsection_whenGetReviewByPlate_thenReturnJsonInspection() throws Exception {
+     void givenInpsection_whenGetReviewByPlate_thenReturnJsonInspection() throws Exception {
 
         mockMvc.perform(get("/inspections/license_plate/{licensePlate}", "1VQW871"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -92,7 +91,7 @@ public class InspectionControllerIntegrationTests {
 
     }
     @Test
-    public void givenInpsection_whenGetReviewByPlateAndDate_thenReturnJsonInspection() throws Exception {
+     void givenInpsection_whenGetReviewByPlateAndDate_thenReturnJsonInspection() throws Exception {
 
         mockMvc.perform(get("/inspections/license_plate/{licensePlate}/inspection_date/{inspectionDate}", "1VQW871",LocalDate.now() ))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -103,7 +102,7 @@ public class InspectionControllerIntegrationTests {
     }
 
     @Test
-    public void whenPostReview_thenReturnJsonReview() throws Exception {
+     void whenPostReview_thenReturnJsonReview() throws Exception {
 
     Inspection inspection = new Inspection(5L,"1VCJ854","all good",true,LocalDate.now());
 
@@ -119,7 +118,7 @@ public class InspectionControllerIntegrationTests {
 }
 
     @Test
-    public void givenReview_whenPutReview_thenReturnJsonReview() throws Exception {
+     void givenReview_whenPutReview_thenReturnJsonReview() throws Exception {
 
         Inspection updatedInspection =  new Inspection(2L,"1VCJ854","not good",false, LocalDate.now());
 
@@ -135,7 +134,7 @@ public class InspectionControllerIntegrationTests {
     }
 
     @Test
-    public void givenReview_whenDeleteReview_thenStatusOk() throws Exception {
+     void givenReview_whenDeleteReview_thenStatusOk() throws Exception {
 
         mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",1L)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -143,7 +142,7 @@ public class InspectionControllerIntegrationTests {
     }
 
     @Test
-    public void givenNoInspection_whenDeleteInspection_thenStatusNotFound() throws Exception{
+     void givenNoInspection_whenDeleteInspection_thenStatusNotFound() throws Exception{
 
         mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",9L)
                 .contentType(MediaType.APPLICATION_JSON))

@@ -33,35 +33,15 @@ class InspectionControllerUnitTests {
     private InspectionRepository inspectionRepository;
 
 
-    public ObjectMapper defaultMapper() {
+     ObjectMapper defaultMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         return objectMapper;
     }
     private ObjectMapper mapper =defaultMapper();
 
-
     @Test
-    void getInspection_happy(){
-        final Inspection inspection= new Inspection(1L,"1VQW871","Geen opmerking",true, LocalDate.now());
-        assertThat(inspection).isNotNull();
-        assertThat(inspection.getComment()).isEqualTo("Geen opmerking");
-        assertThat(inspection.getPassed()).isEqualTo(true);
-        assertThat(inspection.getInspectionDate()).isEqualTo(LocalDate.now());
-    }
-    @Test
-    void getSetInspection_happy(){
-        final Inspection inspection= new Inspection();
-        inspection.setInspectionNumber(3L);
-        inspection.setComment("Alles in orde");
-        inspection.setPassed(true);
-        assertThat(inspection).isNotNull();
-        assertThat(inspection.getInspectionNumber()).isEqualTo(3L);
-        assertThat(inspection.getComment()).isEqualTo("Alles in orde");
-        assertThat(inspection.getPassed()).isEqualTo(true);
-    }
-    @Test
-    public void givenInspection_whenGetInspections_thenReturnJsonInspections() throws Exception {
+     void givenInspection_whenGetInspections_thenReturnJsonInspections() throws Exception {
         Inspection inspection1 = new Inspection(444L,"1VQW871","lamp stuk",false,LocalDate.now());
         Inspection inspection2 = new Inspection(555L,"1VQW871","Geen opmerking",true, LocalDate.now());
 
@@ -83,7 +63,7 @@ class InspectionControllerUnitTests {
                 .andExpect(jsonPath("$[1].passed",is(true)));
     }
     @Test
-    public void givenInspection_whenGetInspectionByInspectionNr_thenReturnJsonInspection() throws Exception {
+     void givenInspection_whenGetInspectionByInspectionNr_thenReturnJsonInspection() throws Exception {
         Inspection inspection = new Inspection(888L,"1VQW871","Geen opmerking",true, LocalDate.now());
 
         given(inspectionRepository.findInspectionByInspectionNumber(888L)).willReturn(inspection);
@@ -97,7 +77,7 @@ class InspectionControllerUnitTests {
     }
 
     @Test
-    public void givenInspection_whenGetInspectionsByLicensePlate_thenReturnJsonInspections() throws Exception {
+     void givenInspection_whenGetInspectionsByLicensePlate_thenReturnJsonInspections() throws Exception {
         Inspection inspection1 = new Inspection(444L,"1VQW871","lamp stuk",false,LocalDate.now());
         Inspection inspection2 = new Inspection(555L,"1VQW871","Geen opmerking",true, LocalDate.now());
 
@@ -119,7 +99,7 @@ class InspectionControllerUnitTests {
                 .andExpect(jsonPath("$[1].passed",is(true)));
     }
     @Test
-    public void givenInspection_whenGetByLicensePlateAndInspectionDate_thenReturnJsonInspections() throws Exception {
+     void givenInspection_whenGetByLicensePlateAndInspectionDate_thenReturnJsonInspections() throws Exception {
         Inspection inspection1 = new Inspection(333L,"1VQW871","lamp stuk",false,LocalDate.now());
 
         List<Inspection> inspectionList = new ArrayList<>();
@@ -137,7 +117,7 @@ class InspectionControllerUnitTests {
 
     }
     @Test
-    public void whenPostInspection_thenReturnJsonInspection() throws Exception{
+     void whenPostInspection_thenReturnJsonInspection() throws Exception{
         Inspection inspection = new Inspection(333L,"1VCJ854","all good",true,LocalDate.now());
 
         mockMvc.perform(post("/inspections")
@@ -152,7 +132,7 @@ class InspectionControllerUnitTests {
     }
 
     @Test
-    public void givenInspection_whenPutInspection_thenReturnJsonInspection() throws Exception{
+     void givenInspection_whenPutInspection_thenReturnJsonInspection() throws Exception{
         Inspection inspection = new Inspection(999L,"1VCJ854","all good",true,LocalDate.now());
 
         given(inspectionRepository.findInspectionByInspectionNumber(999L)).willReturn(inspection);
@@ -169,7 +149,7 @@ class InspectionControllerUnitTests {
                 .andExpect(jsonPath("$.inspectionNumber",is(999)));
     }
     @Test
-    public void givenInspection_whenDeleteInspection_thenStatusOk() throws Exception{
+     void givenInspection_whenDeleteInspection_thenStatusOk() throws Exception{
         Inspection inspectionToBeDeleted = new Inspection(111L,"1VCJ854","all good",true,LocalDate.now());
 
         given(inspectionRepository.findInspectionByInspectionNumber(111L)).willReturn(inspectionToBeDeleted);
@@ -180,7 +160,7 @@ class InspectionControllerUnitTests {
     }
 
     @Test
-    public void givenNoInspection_whenDeleteInspection_thenStatusNotFound() throws Exception{
+     void givenNoInspection_whenDeleteInspection_thenStatusNotFound() throws Exception{
         given(inspectionRepository.findInspectionByInspectionNumber(111L)).willReturn(null);
 
         mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",222L)
