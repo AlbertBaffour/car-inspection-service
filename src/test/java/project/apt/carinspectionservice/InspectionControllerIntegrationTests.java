@@ -136,7 +136,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Test
      void givenReview_whenDeleteReview_thenStatusOk() throws Exception {
 
-        mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",1L)
+        mockMvc.perform(delete("/inspections/inspection_number/{inspectionNumber}",1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -144,7 +144,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Test
      void givenNoInspection_whenDeleteInspection_thenStatusNotFound() throws Exception{
 
-        mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",9L)
+        mockMvc.perform(delete("/inspections/inspection_number/{inspectionNumber}",9L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

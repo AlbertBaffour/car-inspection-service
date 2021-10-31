@@ -68,7 +68,7 @@ public class InspectionController {
         inspectionRepository.save(retrievedInspection);
         return retrievedInspection;
     }
-    @DeleteMapping("/inspection/inspection_number/{inspectionNumber}")
+    @DeleteMapping("/inspections/inspection_number/{inspectionNumber}")
     public ResponseEntity deleteInspection(@PathVariable Long inspectionNumber){
         Inspection inspection = inspectionRepository.findInspectionByInspectionNumber(inspectionNumber);
         if(inspection!=null){

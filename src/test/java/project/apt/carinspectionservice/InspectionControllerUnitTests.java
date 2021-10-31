@@ -154,7 +154,7 @@ class InspectionControllerUnitTests {
 
         given(inspectionRepository.findInspectionByInspectionNumber(111L)).willReturn(inspectionToBeDeleted);
 
-        mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",111L)
+        mockMvc.perform(delete("/inspections/inspection_number/{inspectionNumber}",111L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -163,7 +163,7 @@ class InspectionControllerUnitTests {
      void givenNoInspection_whenDeleteInspection_thenStatusNotFound() throws Exception{
         given(inspectionRepository.findInspectionByInspectionNumber(111L)).willReturn(null);
 
-        mockMvc.perform(delete("/inspection/inspection_number/{inspectionNumber}",222L)
+        mockMvc.perform(delete("/inspections/inspection_number/{inspectionNumber}",222L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
