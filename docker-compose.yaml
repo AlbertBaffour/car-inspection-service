@@ -57,7 +57,7 @@ spec:
       containers:
       - name: car-inspection-service-server
         image: xclalbert/car-inspection-service
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
           - name: http
             containerPort: 8052 # The port that the container exposes
