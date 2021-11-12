@@ -56,7 +56,7 @@ spec:
     spec:                     # Spec for the containers that will be run in the Pods
       containers:
       - name: car-inspection-service-server
-        image: xclalbert/car-inspection-service
+        image: inspectionedgehub/car-inspection-service
         imagePullPolicy: Always
         ports:
           - name: http
