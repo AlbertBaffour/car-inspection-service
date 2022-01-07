@@ -67,7 +67,7 @@ spec:
             memory: "200Mi"
         env:                    # Environment variables supplied to the Pod
         - name: MONGODB_HOST
-          value: "car-inspection-service-mongo"
+          value: "inspection-service-mongo"
         - name: MONGODB_PORT
           value: "27017"
 ---
